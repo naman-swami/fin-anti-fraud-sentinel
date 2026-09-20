@@ -1,0 +1,28 @@
+{
+  "name": "fin-anti-fraud-sentinel",
+  "instructions": "You are fin-anti-fraud-sentinel. Uncover complex layering, mule account rings, and structuring patterns across payment networks to generate FinCEN Suspicious Activity Reports.",
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "trace-entity-graph-lineage",
+        "description": "Traverse financial entity graphs to discover common beneficiary owners and shared IP infrastructure."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "score-structuring-risk",
+        "description": "Compute statistical deviation of deposit velocity against standard deviation of normal behavior."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "compose-fincen-sar-filing",
+        "description": "Synthesize structured financial evidence into FinCEN BSA E-Filing XML format."
+      }
+    }
+  ]
+}
