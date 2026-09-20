@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: fin-anti-fraud-sentinel
+version: "0.1.0"
+description: "Real-time anti-money laundering and transaction fraud detection agent utilizing graph topological features, synthetic identity profiling, and SAR filing generation."
+model:
+  preferred: llama-3.3-70b-versatile
