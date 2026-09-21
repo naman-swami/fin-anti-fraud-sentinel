@@ -57,7 +57,7 @@ fin-anti-fraud-sentinel/
 │   └── fincen_bsa_guidelines.md     # Statutory legal reference
 ├── tests/
 │   └── test_agent.py                # AML rule verification suite
-├── main.py                          # Compliance CLI
+├── monitor.py                          # Compliance CLI
 └── requirements.txt
 ```
 
@@ -68,5 +68,5 @@ fin-anti-fraud-sentinel/
 pytest tests/ -v
 
 # Audit benchmark transaction ledger
-python main.py --demo
+python monitor.py --demo
 ```

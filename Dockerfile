@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 LABEL maintainer="Naman Swami <kgfg00100@gmail.com>"
-LABEL domain="fintech-aml-bsa-monitoring"
+LABEL domain="fin-anti-fraud-sentinel"
 
 WORKDIR /app
 COPY requirements.txt .
@@ -10,4 +10,4 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 
 USER 10001
-CMD ["python", "main.py", "--demo"]
+CMD ["python", "monitor.py", "--demo"]
