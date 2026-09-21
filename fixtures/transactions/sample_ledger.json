@@ -1,0 +1,30 @@
+[
+  {
+    "tx_id": "TX-101",
+    "account_id": "ACC-992",
+    "amount": 9500.0,
+    "type": "CASH_DEPOSIT",
+    "timestamp_hour": 1
+  },
+  {
+    "tx_id": "TX-102",
+    "account_id": "ACC-992",
+    "amount": 9800.0,
+    "type": "CASH_DEPOSIT",
+    "timestamp_hour": 6
+  },
+  {
+    "tx_id": "TX-103",
+    "account_id": "ACC-104",
+    "amount": 14500.0,
+    "type": "CASH_DEPOSIT",
+    "timestamp_hour": 10
+  },
+  {
+    "tx_id": "TX-104",
+    "account_id": "ACC-551",
+    "amount": 250.0,
+    "type": "POS_PURCHASE",
+    "timestamp_hour": 12
+  }
+]

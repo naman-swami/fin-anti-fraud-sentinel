@@ -1,0 +1,21 @@
+rules:
+  - id: AML-BSA-01
+    name: Currency Transaction Report (CTR) Trigger
+    threshold_usd: 10000.0
+    action: MANDATORY_CTR_FILING
+    description: "Single cash transaction exceeding $10,000 mandates FinCEN Form 112 filing."
+
+  - id: AML-STRUCT-02
+    name: Structuring / Smurfing Detection
+    threshold_usd: 9000.0
+    window_hours: 48
+    min_count: 2
+    action: SUSPICIOUS_ACTIVITY_REPORT (SAR)
+    description: "Multiple cash deposits just under the $10,000 threshold to evade reporting."
+
+  - id: AML-VELOCITY-03
+    name: Rapid Fund Movement Velocity
+    threshold_ratio: 0.85
+    window_minutes: 60
+    action: FREEZE_AND_REVIEW
+    description: "Inbound wire immediately followed by outbound wire within 60 minutes."
