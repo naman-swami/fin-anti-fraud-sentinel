@@ -1,72 +1,58 @@
 # Fin Anti-Fraud & AML Sentinel
 
-[![OpenGAP](https://img.shields.io/badge/OpenGAP-0.1.0-blue.svg)](agent.yaml)
-[![RegTech](https://img.shields.io/badge/Domain-AML_BSA_Compliance-crimson.svg)](docs/fincen_bsa_guidelines.md)
-[![Standard](https://img.shields.io/badge/Regulation-FinCEN_31CFR-darkblue.svg)](docs/fincen_bsa_guidelines.md)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](requirements.txt)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+> **Bank Secrecy Act (BSA) & FinCEN Currency Transaction Monitoring System**  
+> Detecting Smurfing / Structuring Patterns and Generating Automated Suspicious Activity Reports (SAR).
 
-An enterprise anti-money laundering (AML) and BSA transaction monitoring system detecting structuring/smurfing evasions, CTR obligations, and generating SAR filing advisories.
+---
 
-```
-                    ┌─────────────────────────┐
-                    │ Raw Transaction Ledger  │
-                    │   (Amounts & Timestamps)│
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │  analyzers/structuring  │
-                    └────────────┬────────────┘
-                                 │
-                 ┌───────────────┴───────────────┐
-                 ▼                               ▼
-      ┌─────────────────────┐         ┌─────────────────────┐
-      │  CTR Check (>$10k)  │         │ Smurfing Evaluation │
-      │   (FinCEN Form 112) │         │  (SAR Recommendation)│
-      └──────────┬──────────┘         └──────────┬──────────┘
-                 │                               │
-                 └───────────────┬───────────────┘
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ Compliance Action Gate  │
-                    │ (FREEZE / REPORT / PASS)│
-                    └─────────────────────────┘
-```
+### Regulatory Rules Matrix
 
-## Features
-
-- **Structuring Detection**: Identifies accounts executing multiple deposits between $8,000–$9,999 to evade CTR thresholds.
-- **Mandatory CTR Flags**: Immediately highlights single currency operations $\ge \$10,000$.
-- **Audit-Ready Evidence**: Maps every flag directly to 31 U.S.C. § 5324 statutory authorities.
-
-## Directory Structure
+Under Title 31 of the Code of Federal Regulations (31 CFR Chapter X), financial institutions must monitor transaction streams for evasion tactics:
 
 ```
-fin-anti-fraud-sentinel/
-├── agent.yaml                       # OpenGAP 0.1.0 Manifest
-├── EXPLAINABILITY.md                # 7-checkpoint AML audit provenance
-├── analyzers/
-│   └── structuring_detector.py      # Smurfing & CTR evaluation engine
-├── rules/
-│   └── bsa_aml_rules.yaml           # FinCEN compliance rule thresholds
-├── fixtures/
-│   └── transactions/
-│       └── sample_ledger.json       # Benchmark transaction streams
-├── docs/
-│   └── fincen_bsa_guidelines.md     # Statutory legal reference
-├── tests/
-│   └── test_agent.py                # AML rule verification suite
-├── monitor.py                          # Compliance CLI
-└── requirements.txt
+                      Transaction Stream Ingestion
+                                   │
+                   ┌───────────────┴───────────────┐
+                   ▼                               ▼
+       Single Deposit >= $10,000         Multiple Sub-$10k Deposits
+                   │                      Within 48h Window (Sum >= $10k)
+                   ▼                               ▼
+      [Mandatory CTR Trigger]             [Smurfing / Structuring Flag]
+       31 CFR § 1010.311                   31 CFR § 1010.314 (31 U.S.C. 5324)
+                   │                               │
+                   └───────────────┬───────────────┘
+                                   ▼
+                   Generate FinCEN Form 111 (SAR Narrative)
 ```
 
-## Quick Start
+---
+
+### Automated SAR Narrative Generation
+
+When temporal aggregation confirms smurfing behavior across multiple branches:
+
+```json
+{
+  "filing_type": "SUSPICIOUS_ACTIVITY_REPORT",
+  "subject_account": "ACT-8921-X",
+  "detected_pattern": "STRUCTURING_SMURFING",
+  "aggregate_amount_usd": 18400.00,
+  "transaction_count": 3,
+  "window_hours": 36.5,
+  "narrative": "Subject conducted 3 consecutive cash deposits ($9,200, $4,800, $4,400) at distinct branch locations within 36.5 hours, exhibiting clear structuring to evade Currency Transaction Reporting thresholds."
+}
+```
+
+---
+
+### Compliance Engine Execution
 
 ```bash
-# Run AML audit test suite
-pytest tests/ -v
-
-# Audit benchmark transaction ledger
+# Monitor sample transaction ledger
 python monitor.py --demo
+
+# Run anti-money laundering rule unit tests
+pytest tests/ -v
 ```
+
+Detailed statutory mandates, retention schedules, and law enforcement escalation guidelines are published in [FINCEN_COMPLIANCE.md](FINCEN_COMPLIANCE.md).
